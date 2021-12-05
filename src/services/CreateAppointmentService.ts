@@ -3,6 +3,7 @@ import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import { getCustomRepository } from 'typeorm';
 import appointmentsRouter from '../routes/appointments.routes';
+import AppError from '../errors/AppErrors'
 
 interface Request {
     date: Date,
@@ -20,7 +21,7 @@ class CreateAppointmentService {
         const findAppointmentSameDate = await appointmentsRepository.findByDate(appointmentDate);
 
         if (findAppointmentSameDate) {
-            throw Error('This appointment is already booked');
+            throw new AppError('This appointment is already booked');
         }
 
         const appointment = appointmentsRepository.create({

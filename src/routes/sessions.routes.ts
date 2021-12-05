@@ -1,38 +1,30 @@
 import { Router } from "express";
 import User from "../models/User";
-import AuthenticateUserService from "../service/AuthenticateUserService";
+import AuthenticateUserService from "../services/AuthenticateUserService";
 
 const SessionsRouter = Router();
 
 SessionsRouter.post('/', async (request, response) => {
-    try {
-        const { email, password } = request.body;
 
-        const authenticateUser = new AuthenticateUserService();
+    const { email, password } = request.body;
 
-        const { user, token } = await authenticateUser.execute({
-            email,
-            password
-        })
+    const authenticateUser = new AuthenticateUserService();
 
-        const userWithoutPassword = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            avatar: user.avatar,
-            created_at: user.created_at,
-            updated_at: user.updated_at,
-        }
+    const { user, token } = await authenticateUser.execute({
+        email,
+        password
+    })
 
-        return response.json({userWithoutPassword, token});
-
-
-    } catch (err) {
-        if (err instanceof Error) {
-            return response.status(400).json({ error: err.message })
-        }
-
+    const userWithoutPassword = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
     }
+
+    return response.json({ userWithoutPassword, token });
 })
 
 export default SessionsRouter;

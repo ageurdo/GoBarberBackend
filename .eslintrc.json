@@ -22,6 +22,12 @@
         "prettier/prettier": "error",
         "class-methods-use-this": "off", // disable this. in classes
         "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-unused-var": [
+            "error",
+            {
+                "argsIgnorePattern": "_"
+            }
+        ],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "react/jsx-filename-extension": [
